@@ -48,4 +48,4 @@ A classe `br.edu.infnet.michellyapi.principal.Principal` realiza:
 O projeto é configurado para rodar como um aplicativo Spring Boot.
 
 1.  **Requisitos:** Java 21 e Maven.
-2.  **Execução:** A aplicação pode ser executada a partir da IDE IntelliJ ou via terminal:
+2.  **Execução:** A aplicação pode ser executada a partir da IDE IntelliJ ou via terminal.
