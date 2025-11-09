@@ -1,4 +1,4 @@
-package br.edu.infnet.michellyapi.service;
+package br.edu.infnet.michellyapi.entidades;
 
 public class Servico {
     private String nomeServico;
