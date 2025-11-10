@@ -187,7 +187,7 @@ br.edu.infnet.michellyapi
 
 ## 👨‍💻 Autor
 
-**Michelly** - Turma de Fundamentos de Desenvolvimento com Java
+**Michelly** - Bloco Desenvolvimento Back-end [25E4-26E1].
 
 ---
 
