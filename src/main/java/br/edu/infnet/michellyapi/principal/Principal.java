@@ -20,10 +20,38 @@ public class Principal {
     private final FuncionarioService funcionarioService = new FuncionarioService();
     private final ServicoService servicoService = new ServicoService();
     private final AgendamentoService agendamentoService = new AgendamentoService();
+    private int tentativasLogin = 0;
+    private boolean usuarioAutenticado = false;
 
     public void executar() {
         carregarDadosIniciais();
-        exibirMenu();
+        String senhaAdmin = "admin123";
+        boolean loginAutorizado = false;
+
+        do {
+            System.out.println("Digite a senha de acesso: ");
+            String senha = leitura.nextLine();
+            tentativasLogin++;
+
+            if (senha.equals(senhaAdmin)) {
+                loginAutorizado = true;
+                usuarioAutenticado = true;
+                System.out.println("Seja bem-vido!");
+            } else {
+                System.out.println("Login não autorizado! Você tem " + (3 - tentativasLogin) + " tentativa(s).");
+                if (tentativasLogin >= 3) {
+                    System.out.println("Você excedeu o número possível de tentativas de login!");
+                    break;
+                }
+            }
+        } while (!loginAutorizado && tentativasLogin < 3);
+
+        if (loginAutorizado && usuarioAutenticado) {
+            exibirMenu();
+        } else {
+            System.out.println("Acesso não autorizado! Finalizando...");
+        }
+
     }
     private void carregarDadosIniciais() {
         Cliente c1 = new Cliente("Odete Roitman", "12345678900", "21992345678");
