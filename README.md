@@ -258,6 +258,7 @@ A terceira entrega teve como foco evoluir o projeto para uma estrutura mais robu
 
 ## 📁 Estrutura de Pacotes (Atualizada)  
 
+```
 br.edu.infnet.michellyapi
 ├── entidades/
 │   ├── Cliente.java
@@ -285,6 +286,7 @@ br.edu.infnet.michellyapi
 │   └── ClasseParaTestes.java
 │
 └── MichellyapiApplication.java
+```
 
 ---
 
