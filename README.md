@@ -185,6 +185,155 @@ br.edu.infnet.michellyapi
 
 ---
 
+# 📘 Projeto Salão de Beleza – Entrega 3  
+**Fundamentos de Desenvolvimento com Java – Programação Orientada a Objetos (POO)**  
+
+Este repositório contém o código-fonte atualizado do projeto, agora atendendo à **Feature 3 – Programação Orientada a Objetos**, além das entregas anteriores.  
+
+---
+
+## 🚀 Informações da Entrega  
+
+A terceira entrega teve como foco evoluir o projeto para uma estrutura mais robusta e orientada a objetos, aplicando os pilares da **POO**.  
+
+### O que foi solicitado:  
+1. **Objetos e Classes**  
+   - Ampliação do modelo do domínio.  
+   - Criação de novas classes com relacionamentos (`Cliente`, `Funcionario`, `Servico`, `Agendamento`).  
+   - Uso de **Enum**.  
+   - Inclusão de atributos mais completos.  
+
+2. **Novos Tipos e Atributos**  
+   - Tipos primitivos e `String`.  
+   - Enum (ex.: status de agendamento).  
+   - Relacionamentos entre classes.  
+   - Coleções (`List`, `ArrayList`).  
+
+3. **Métodos**  
+   - Métodos com parâmetros.  
+   - Sobrecarga de métodos.  
+   - Implementação de `toString()`.  
+   - Uso de classes utilitárias do Java na lógica de negócio.  
+
+4. **Construtores**  
+   - Construtor padrão (sem argumentos).  
+   - Construtores com parâmetros.  
+   - Chamada entre construtores para evitar duplicação.  
+
+5. **Encapsulamento**  
+   - Getters e Setters com validação.  
+   - Controle de acesso aos atributos.  
+
+6. **Testando o Comportamento**  
+   - Instanciação de objetos no método `run()` da classe `MichellyapiApplication`.  
+   - Testes de comportamento isolados, fora das estruturas de menu.  
+
+---
+
+## 🔧 Principais Alterações na Estrutura do Projeto  
+
+- **`Principal.java`**: agora contém apenas o menu e sua lógica de interação com o usuário.  
+- **`MichellyapiApplication.java`**: passou a implementar `CommandLineRunner`, executando o menu e os testes.  
+- **`ClasseParaTestes.java`**: criada em `br.edu.infnet.michellyapi.test` para instanciar classes e validar comportamentos.  
+---
+
+## 🔧 Funcionalidades a Finalizar  
+
+1. **Autenticação**  
+   - O sistema de login já estava funcionando na entrega anterior.  
+   - Precisa ser ajustado para integrar com `AutenticacaoService` e utilizar o `NivelAcesso` (enum).  
+   - Objetivo: controlar permissões de acesso (ex.: administrador x funcionário).  
+
+2. **Agendamento com Data e Hora**  
+   - A classe `Agendamento` já existe, mas precisa receber atributos de **data e hora**.  
+   - Deve relacionar `Cliente`, `Funcionario` e `Servico`.  
+   - O `StatusAgendamento` (enum) será usado para indicar se está **MARCADO**, **CANCELADO** ou **CONCLUÍDO**.  
+
+3. **Cálculos de Pagamento**  
+   - Implementar lógica para calcular valores de serviços prestados.  
+   - Utilizar o enum `FormaPagamento` (ex.: DINHEIRO, CARTÃO, PIX).  
+   - Possibilidade de incluir regras de comissão para funcionários.  
+
+---
+
+## 📁 Estrutura de Pacotes (Atualizada)  
+
+br.edu.infnet.michellyapi
+├── entidades/
+│   ├── Cliente.java
+│   ├── Funcionario.java
+│   ├── Servico.java
+│   └── Agendamento.java
+│
+├── enums/
+|   ├── FormaPagamento.java
+|   ├── NivelAcesso.java
+|   ├── StatusAgendamento.java
+│   └── TipoServico.java
+│
+├── service/
+|   ├── AutenticacaoService.java
+│   ├── ClienteService.java
+│   ├── FuncionarioService.java
+│   ├── ServicoService.java
+│   └── AgendamentoService.java
+│
+├── principal/
+│   └── Principal.java
+│
+├── testes/
+│   └── ClasseParaTestes.java
+│
+└── MichellyapiApplication.java
+
+---
+
+## 🧠 Funcionalidades Demonstradas na Feature 3  
+
+- **Construtores**  
+  - Vazio, com parâmetros e encadeados.  
+
+- **Métodos personalizados e sobrecarregados**  
+  - Ex.: criação de serviço apenas com nome.  
+  - Ex.: criação de agendamento com cliente, funcionário e data.  
+  - Sobrecarga de métodos: `cadastrar`, `buscar`, `listar`.  
+
+- **Relacionamentos**  
+  - `Agendamento` recebe objetos de `Cliente`, `Funcionario` e `Servico`.  
+
+- **Enum aplicado**  
+  - `StatusAgendamento { MARCADO, CANCELADO, CONCLUIDO }`.  
+
+- **Encapsulamento aprimorado**  
+  - Validações simples e controle de acesso aos atributos.  
+
+- **Testes de comportamento**  
+  - Executados em `ClasseParaTestes`.  
+  - Chamados automaticamente dentro de `MichellyapiApplication.run()`.  
+
+---
+
+## 🎯 Próximos Passos  
+
+- Finalizar **autenticação** com níveis de acesso.  
+- Implementar **agendamento com data e hora**.  
+- Criar **cálculos de pagamento** integrando serviços, clientes e funcionários.  
+- Testar todas as funcionalidades em `ClasseParaTestes` para validar comportamento.  
+
+---
+
+## ▶️ Como Executar  
+
+1. Instale **Java 21+**.  
+2. Abra o projeto em uma IDE (IntelliJ recomendado).  
+3. Execute a classe:  
+   - `MichellyapiApplication.java`  
+
+👉 O sistema exibirá o menu e, em seguida, executará automaticamente os testes da Feature 3.  
+
+---
+
+
 ## 👨‍💻 Autor
 
 **Michelly** - Bloco Desenvolvimento Back-end [25E4-26E1].
