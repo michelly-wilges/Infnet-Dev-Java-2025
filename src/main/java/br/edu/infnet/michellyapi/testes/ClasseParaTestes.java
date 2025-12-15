@@ -3,9 +3,12 @@ package br.edu.infnet.michellyapi.testes;
 import br.edu.infnet.michellyapi.entidades.Cliente;
 import br.edu.infnet.michellyapi.entidades.Funcionario;
 import br.edu.infnet.michellyapi.entidades.Servico;
+import br.edu.infnet.michellyapi.exceptions.RegraNegocioException;
 import br.edu.infnet.michellyapi.service.ClienteService;
 import br.edu.infnet.michellyapi.service.FuncionarioService;
 import br.edu.infnet.michellyapi.service.ServicoService;
+import br.edu.infnet.michellyapi.service.PessoaService;
+import br.edu.infnet.michellyapi.entidades.Pessoa;
 
 public class ClasseParaTestes {
     public static void executarTestes() {
@@ -21,6 +24,13 @@ public class ClasseParaTestes {
         clienteService.cadastrar(c1);
         clienteService.cadastrar(c2);
 
+        try {
+            clienteService.cadastrar(c1);
+            clienteService.cadastrar(c2);
+        } catch (RegraNegocioException e) {
+            System.out.println("[Teste] " + e.getMessage());
+        }
+
         System.out.println(clienteService.buscarPorCpf("12345678910"));
         System.out.println(clienteService.buscarPorCpf("11335577990"));
 
@@ -35,6 +45,16 @@ public class ClasseParaTestes {
 
             funcionarioService.cadastrar(f);
             System.out.println(funcionarioService.buscarPorNome("Leila"));
+
+        PessoaService pessoaService = new PessoaService();
+
+        Cliente cliente = new Cliente("Ana", "12345678901", "21999999999");
+        Funcionario funcionario = new Funcionario("Bruno", "51988888888", "Barbeiro", 10);
+
+        pessoaService.cadastrar(cliente);
+        pessoaService.cadastrar(funcionario);
+
+        pessoaService.imprimirResumo();
 
         System.out.println("ServicoService()");
         ServicoService servicoService = new ServicoService();
