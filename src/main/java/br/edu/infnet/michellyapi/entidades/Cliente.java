@@ -3,21 +3,20 @@ package br.edu.infnet.michellyapi.entidades;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente {
-    private String nomeCliente;
-    private String telefoneCliente;
+public class Cliente extends Pessoa {
     private String cpfCliente;
     private List<Agendamento> historicoAgendamentos;
+    private boolean clienteVIP;
+    private double saldoCredito;
 
     public Cliente() {
         this.historicoAgendamentos = new ArrayList<>();
     }
 
     public Cliente(String nomeCliente, String cpfCliente, String telefoneCliente) {
-        this();
-        this.nomeCliente = nomeCliente;
+        super(nomeCliente, telefoneCliente);
         this.cpfCliente = cpfCliente;
-        this.telefoneCliente = telefoneCliente;
+        this.historicoAgendamentos = new ArrayList<>();
     }
 
     public void adicionarAgendamento(Agendamento agendamento) {
@@ -38,28 +37,24 @@ public class Cliente {
         return historicoAgendamentos.size() >= 5;
     }
 
+    public void atualizarStatusVIP() {
+        this.clienteVIP = ehClienteFidelizado();
+    }
+
     public String getNomeCliente() {
-        return nomeCliente;
+        return getNome();
     }
 
     public void setNomeCliente(String nomeCliente) {
-        if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
-            System.out.println("ATENÇÃO: Nome não pode ser vazio!");
-            return;
-        }
-        this.nomeCliente = nomeCliente.trim();
+        setNome(nomeCliente);
     }
 
     public String getTelefoneCliente() {
-        return telefoneCliente;
+        return getTelefone();
     }
 
     public void setTelefoneCliente(String telefoneCliente) {
-        if (telefoneCliente == null || telefoneCliente.length() < 10) {
-            System.out.println("ATENÇÃO: Telefone inválido!");
-            return;
-        }
-        this.telefoneCliente = telefoneCliente;
+        setTelefone(telefoneCliente);
     }
 
     public String getCpfCliente() {
@@ -68,26 +63,51 @@ public class Cliente {
 
     public void setCpfCliente(String cpfCliente) {
         if (cpfCliente == null || cpfCliente.length() != 11) {
-            System.out.println("ATENÇÃO: CPF deve ter 11 dígitos!");
-            return;
+            throw new IllegalArgumentException("ATENÇÃO: CPF deve ter 11 dígitos!");
         }
         this.cpfCliente = cpfCliente;
     }
+
+    public boolean isClienteVIP() {
+        return clienteVIP;
+    }
+
+    public void setClienteVIP(boolean clienteVIP) {
+        this.clienteVIP = clienteVIP;
+    }
+
+    public double getSaldoCredito() {
+        return saldoCredito;
+    }
+
+    public void adicionarCredito(double valor) {
+        if (valor <= 0) {
+            System.out.println("Valor de crédito inválido.");
+            return;
+        }
+        this.saldoCredito += valor;
+    }
+
 
     public List<Agendamento> getHistoricoAgendamentos() {
         return historicoAgendamentos;
     }
 
     @Override
+    public String getTipoPessoa() {
+        return "Cliente";
+    }
+    @Override
     public String toString() {
         return "========================================\n" +
                 "CLIENTE" + "\n" +
                 "========================================\n" +
-                "Nome: " + nomeCliente + "\n" +
+                "Nome: " + getNomeCliente() + "\n" +
                 "CPF: " + cpfCliente + "\n" +
-                "Telefone: " + telefoneCliente + "\n" +
+                "Telefone: " + getTelefoneCliente() + "\n" +
                 "Total de agendamentos: " + quantidadeAgendamentos() + "\n" +
-                "Cliente fidelizado: " + (ehClienteFidelizado() ? "SIM" : "NÃO") + "\n" +
+                "Cliente VIP: " + (clienteVIP ? "SIM" : "NÃO") + "\n" +
+                "Saldo de crédito: R$ " + String.format("%.2f", saldoCredito) + "\n" +
                 "========================================";
     }
 }

@@ -7,6 +7,7 @@ import br.edu.infnet.michellyapi.entidades.Servico;
 import br.edu.infnet.michellyapi.enums.FormaPagamento;
 import br.edu.infnet.michellyapi.enums.StatusAgendamento;
 import br.edu.infnet.michellyapi.enums.TipoServico;
+import br.edu.infnet.michellyapi.exceptions.RegraNegocioException;
 import br.edu.infnet.michellyapi.service.AgendamentoService;
 import br.edu.infnet.michellyapi.service.ClienteService;
 import br.edu.infnet.michellyapi.service.FuncionarioService;
@@ -54,6 +55,10 @@ public class Principal {
 
     }
     private void carregarDadosIniciais() {
+        if (clienteService.contarClientes() > 0) {
+            System.out.println("Dados iniciais já carregados.");
+            return;
+        }
         Cliente c1 = new Cliente("Odete Roitman", "12345678900", "21992345678");
         Cliente c2 = new Cliente("Maria de Fátima Acioly", "78945612300", "21912345678");
         clienteService.cadastrar(c1);
@@ -178,7 +183,12 @@ public class Principal {
         String telefone = leitura.nextLine();
 
         Cliente cliente = new Cliente(nome, cpf, telefone);
-        clienteService.cadastrar(cliente);
+        try {
+            clienteService.cadastrar(cliente);
+            System.out.println("Cliente cadastrado com sucesso!");
+        } catch (RegraNegocioException e) {
+            System.out.println("[Erro] " + e.getMessage());
+        }
     }
 
     private void cadastrarFuncionario() {
@@ -194,8 +204,13 @@ public class Principal {
         f.setCargoFuncionario(leitura.nextLine());
 
         System.out.println("Digite o valor da comissão (%): ");
-        f.setComissaoFuncionario(Integer.parseInt(leitura.nextLine()));
-
+        try {
+            int comissao = Integer.parseInt(leitura.nextLine());
+            f.setComissaoFuncionario(comissao);
+        } catch (NumberFormatException e) {
+            System.out.println("[Erro] comissão deve ser um número inteiro.");
+            return;
+        }
         funcionarioService.cadastrar(f);
     }
 
@@ -274,7 +289,7 @@ public class Principal {
 
         switch (opcao) {
             case "1":
-                clienteService.listarTodos().forEach(System.out::println);
+                listarClientes();
                 break;
             case "2":
                 funcionarioService.listarTodos()
@@ -368,6 +383,15 @@ private void cadastrarServico() {
 
     System.out.println("Duração em minutos: ");
     s.setDuracaoMinutos(Integer.parseInt(leitura.nextLine()));
+
+    try {
+        s.setValorServico(Double.parseDouble(leitura.nextLine()));
+        s.setDuracaoMinutos(Integer.parseInt(leitura.nextLine()));
+    } catch (NumberFormatException e) {
+        System.out.println("[Erro] Valor ou duração inválidos.");
+        return;
+    }
+
 
     System.out.println("""
                 ======================================================
@@ -528,9 +552,14 @@ private void cadastrarServico() {
 
             if (agendamentos.isEmpty()) {
                 System.out.println("Nenhum agendamento cadastrado.");
-            } else {
-                System.out.println("Total: " + agendamentos.size() + " agendamento(s)");
-                agendamentos.forEach(System.out::println);
+                return;
+            }
+            System.out.println("Agendamentos Ativos: ");
+            for (Agendamento ag: agendamentos) {
+                if (ag.getStatus() == StatusAgendamento.CANCELADO) {
+                    continue;
+                }
+                System.out.println(ag);
             }
         }
         private void buscarAgendamentoPorCliente() {

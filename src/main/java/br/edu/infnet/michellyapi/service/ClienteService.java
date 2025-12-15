@@ -1,43 +1,34 @@
 package br.edu.infnet.michellyapi.service;
 
 import br.edu.infnet.michellyapi.entidades.Cliente;
-import java.util.ArrayList;
+import br.edu.infnet.michellyapi.exceptions.RegraNegocioException;
+import br.edu.infnet.michellyapi.interfaces.Cadastro;
+import br.edu.infnet.michellyapi.repositorio.CadastroEmArquivo;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClienteService {
-
-    private List<Cliente> clientes = new ArrayList<>();
+    private final Cadastro<Cliente> cadastroArquivo = new CadastroEmArquivo();
 
     public void cadastrar(Cliente cliente) {
         if (buscarPorCpf(cliente.getCpfCliente()) != null) {
-            System.out.println("ERRO: CPF já cadastrado!");
-            return;
+            throw new RegraNegocioException("CPF já cadastrado!");
         }
-        clientes.add(cliente);
-        System.out.println("Cliente cadastrado com sucesso!");
+        cadastroArquivo.cadastrar(cliente);
+        System.out.println("Cliente salvo em arquivo!");
     }
 
     public Cliente buscarPorCpf(String cpf) {
-        for (Cliente c : clientes) {
-            if (c.getCpfCliente().equalsIgnoreCase(cpf)) {
-                return c;
-            }
-        }
-        return null;
+       return cadastroArquivo.listar().stream().filter(c -> c.getCpfCliente().equalsIgnoreCase(cpf)).findFirst().orElse(null);
     }
 
     public Cliente buscarPorNome(String nome) {
-        for (Cliente c : clientes) {
-            if (c.getNomeCliente().equalsIgnoreCase(nome)) {
-                return c;
-            }
-        }
-        return null;
+       return cadastroArquivo.listar().stream().filter(c -> c.getNomeCliente().equalsIgnoreCase(nome)).findFirst().orElse(null);
     }
 
     public List<Cliente> buscarPorNomeParcial(String nomeParcial) {
-        return clientes.stream()
+        return cadastroArquivo.listar().stream()
                 .filter(c -> c.getNomeCliente()
                         .toLowerCase()
                         .contains(nomeParcial.toLowerCase()))
@@ -45,7 +36,7 @@ public class ClienteService {
     }
 
     public List<Cliente> listarTodos() {
-        return clientes;
+        return cadastroArquivo.listar();
     }
 
     public boolean existeClienteComCpf(String cpf) {
@@ -53,11 +44,11 @@ public class ClienteService {
     }
 
     public int contarClientes() {
-        return clientes.size();
+        return listarTodos().size();
     }
 
     public List<Cliente> listarClientesFidelizados() {
-        return clientes.stream()
+        return cadastroArquivo.listar().stream()
                 .filter(Cliente::ehClienteFidelizado)
                 .collect(Collectors.toList());
     }

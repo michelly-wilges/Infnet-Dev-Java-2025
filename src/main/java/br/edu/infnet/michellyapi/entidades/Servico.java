@@ -32,6 +32,15 @@ public class Servico {
         return valorServico + (valorServico * percentual / 100);
     }
 
+    private double calcularMargemInterna() {
+        return valorServico * 0.10;
+    }
+
+    public void ajustarPrecoComMargem() {
+        double margem = calcularMargemInterna();
+        this.valorServico += margem;
+    }
+
     public String formatarDuracao() {
         int horas = duracaoMinutos / 60;
         int minutos = duracaoMinutos % 60;

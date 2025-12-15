@@ -17,7 +17,7 @@ public class MichellyapiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-        ClasseParaTestes.executarTestes();
+//        ClasseParaTestes.executarTestes();
 
 		Principal principal = new Principal();
 		principal.executar();
