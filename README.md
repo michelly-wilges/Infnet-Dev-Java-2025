@@ -78,8 +78,7 @@ Aplicação dos pilares da Programação Orientada a Objetos:
 
 ---
 
-## 📁 Estrutura de Pacotes Atualizada
-## 📁 Estrutura de Pacotes (Atualizada)
+## 📁 Estrutura de Pacotes
 
 ```text
 br.edu.infnet.michellyapi
